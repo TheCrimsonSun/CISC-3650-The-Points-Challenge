@@ -330,24 +330,6 @@ h3 {
   background: linear-gradient(135deg, var(--pink), var(--accent-2));
 }
 
-.debrief-panel {
-  margin-top: 26px;
-  padding: 24px;
-}
-
-.debrief-list {
-  display: grid;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.debrief-item {
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
-}
-
 .modal {
   position: fixed;
   inset: 0;
