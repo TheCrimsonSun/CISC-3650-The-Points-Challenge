@@ -75,39 +75,6 @@ const rounds = [
   }
 ];
 
-const darkPatterns = [
-  {
-    name: "Confirmshaming",
-    where: "The welcome screen decline button says the player must not want prizes.",
-    influence: "It nudges the player to start instead of calmly opting out.",
-    why: "The refusal option is written to make the player feel bad."
-  },
-  {
-    name: "Preselection / default manipulation",
-    where: "The Super Booster checkbox is pre-selected during gameplay.",
-    influence: "It quietly takes 40 points unless the player notices and unchecks it.",
-    why: "The system relies on default acceptance instead of explicit choice."
-  },
-  {
-    name: "Fake urgency",
-    where: "Pressure mode uses warning banners about missing rewards.",
-    influence: "It pushes the player to keep going quickly without reflection.",
-    why: "The urgency framing is persuasive pressure rather than neutral information."
-  },
-  {
-    name: "Roach motel",
-    where: "Interstitial offers are easy to accept, but the lower-emphasis option keeps the player in the same persuasive flow.",
-    influence: "It encourages continued engagement instead of a clean exit.",
-    why: "The system makes the preferred merchant path easier than leaving."
-  },
-  {
-    name: "Reward bait",
-    where: "The score meter constantly promises a Premium Prize Box at 500 points.",
-    influence: "It keeps the player chasing rewards and tolerating more manipulation.",
-    why: "A flashy reward promise is used to sustain engagement."
-  }
-];
-
 const welcomeScreen = document.getElementById("welcomeScreen");
 const gameScreen = document.getElementById("gameScreen");
 const finalScreen = document.getElementById("finalScreen");
@@ -136,7 +103,6 @@ const modalActionsEl = document.getElementById("modalActions");
 const finalSummaryEl = document.getElementById("finalSummary");
 const finalScoreEl = document.getElementById("finalScore");
 const finalRoundsEl = document.getElementById("finalRounds");
-const debriefListEl = document.getElementById("debriefList");
 
 const state = {
   roundIndex: 0,
@@ -210,7 +176,7 @@ function loadRound() {
   if (!state.pressureMode && state.roundIndex >= 5) {
     state.pressureMode = true;
     pressureBannerEl.classList.remove("hidden");
-    merchantHintEl.textContent = "Flash sale pressure is live. Keep the player chasing rewards.";
+    merchantHintEl.textContent = "Bonus mode is active. Higher energy rounds are now live.";
     upsellCardEl.classList.remove("hidden");
   }
 
@@ -363,7 +329,7 @@ function resolveRound(success, message) {
   let delta = success ? 90 : 25;
   const boosterCost = applyBoosterCharge();
   state.score += delta;
-  feedbackEl.textContent = `${message} ${success ? `+${delta}` : `+${delta}`} points${boosterCost ? `, ${boosterCost} booster fee` : ""}.`;
+  feedbackEl.textContent = `${message} +${delta} points${boosterCost ? `, ${boosterCost} booster fee` : ""}.`;
   updateHud();
   disableButtons();
 
@@ -434,29 +400,17 @@ function finishGame() {
   finalScoreEl.textContent = state.score;
   finalRoundsEl.textContent = `${state.roundIndex} / ${rounds.length}`;
   finalSummaryEl.textContent =
-    "The mini-games looked playful, but the surrounding interface kept steering the player toward urgency, preselected boosts, and reward chasing. This sample treats the merchant as the one deploying the manipulation.";
-  renderDebrief();
+    state.score >= 500
+      ? "You reached the top reward tier and finished the full arcade run."
+      : "Your run is over. Play again to chase a higher reward total.";
   switchScreen(finalScreen);
-}
-
-function renderDebrief() {
-  debriefListEl.innerHTML = "";
-  darkPatterns.forEach((pattern) => {
-    const item = document.createElement("article");
-    item.className = "debrief-item";
-    item.innerHTML = `
-      <p><strong>${pattern.name}</strong></p>
-      <p><strong>Where:</strong> ${pattern.where}</p>
-      <p><strong>Influence:</strong> ${pattern.influence}</p>
-      <p><strong>Why:</strong> ${pattern.why}</p>
-    `;
-    debriefListEl.appendChild(item);
-  });
 }
 
 startBtn.addEventListener("click", startGame);
 learnBtn.addEventListener("click", startGame);
 replayBtn.addEventListener("click", startGame);
 restartBtn.addEventListener("click", startGame);
+
+switchScreen(welcomeScreen);
 
 switchScreen(welcomeScreen);
