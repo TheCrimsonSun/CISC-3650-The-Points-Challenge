@@ -13,153 +13,20 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <section id="welcomeScreen" class="screen active">
-        <div class="hero-panel">
-          <p class="eyebrow">ARCADE REWARD EVENT</p>
-          <h1>PrizePop Arcade</h1>
-          <p class="intro">
-            Play quick mini-games, collect reward points, and unlock exclusive
-            offers from our fun-first arcade.
-          </p>
-
-          <div class="hero-grid">
-            <article class="info-box">
-              <span>Length</span>
-              <strong>2-5 min</strong>
-            </article>
-            <article class="info-box">
-              <span>Mini-Games</span>
-              <strong>8 rounds</strong>
-            </article>
-            <article class="info-box">
-              <span>Prize Goal</span>
-              <strong>500 points</strong>
-            </article>
-          </div>
-
-          <div class="welcome-actions">
-            <button id="startBtn" class="primary-btn">Play For Rewards</button>
-            <button id="learnBtn" class="ghost-btn subtle-btn">No thanks, I guess I do not want prizes</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="gameScreen" class="screen">
-        <header class="hud-bar">
-          <div class="hud-brand">
-            <p class="eyebrow">PRIZEPOP LIVE</p>
-            <h2 id="roundTitle">Tap Rush</h2>
-          </div>
-
-          <div class="hud-stats">
-            <article class="hud-pill">
-              <span>Points</span>
-              <strong id="score">0</strong>
-            </article>
-            <article class="hud-pill">
-              <span>Round</span>
-              <strong id="roundCounter">1 / 8</strong>
-            </article>
-            <article class="hud-pill">
-              <span>Timer</span>
-              <strong id="timer">12</strong>
-            </article>
-          </div>
-        </header>
-
-        <section id="pressureBanner" class="pressure-banner hidden">
-          Limited-time bonus window detected. Keep playing now to avoid missing your rewards.
-        </section>
-
-        <section class="stage-panel">
-          <div class="promo-column">
-            <div class="promo-card">
-              <p class="small-title">Reward Meter</p>
-              <div class="meter-track">
-                <div id="meterFill" class="meter-fill"></div>
-              </div>
-              <p id="goalText" class="promo-copy">Reach 500 points to unlock the Premium Prize Box.</p>
-            </div>
-
-            <div id="upsellCard" class="promo-card hidden">
-              <p class="small-title">Boost Offer</p>
-              <p class="promo-copy">
-                Auto-select Super Booster for a better chance at rewards.
-              </p>
-              <label class="check-row">
-                <input id="boostToggle" type="checkbox" checked />
-                <span>Add Super Booster for 40 points</span>
-              </label>
-            </div>
-
-            <div class="promo-card">
-              <p class="small-title">Streak Status</p>
-              <p id="merchantHint" class="promo-copy">
-                Complete the round fast to keep your reward streak alive.
-              </p>
-            </div>
-          </div>
-
-          <div class="game-column">
-            <div class="game-panel">
-              <div class="game-head">
-                <div>
-                  <p class="small-title">Challenge</p>
-                  <h3 id="challengeTitle">Loading mini-game</h3>
-                </div>
-                <button id="restartBtn" class="ghost-btn">Restart</button>
-              </div>
-
-              <p id="challengeText" class="challenge-copy"></p>
-
-              <div id="gameArea" class="game-area"></div>
-
-              <div class="feedback-panel">
-                <p class="small-title">Feedback</p>
-                <p id="feedback">Play the mini-game to keep your points growing.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section id="finalScreen" class="screen">
-        <div class="hero-panel">
-          <p class="eyebrow">RUN COMPLETE</p>
-          <h2>The arcade run is over</h2>
-          <p id="finalSummary" class="intro"></p>
-
-          <div class="hero-grid">
-            <article class="info-box">
-              <span>Final Points</span>
-              <strong id="finalScore">0</strong>
-            </article>
-            <article class="info-box">
-              <span>Rounds Cleared</span>
-              <strong id="finalRounds">0 / 8</strong>
-            </article>
-            <article class="info-box">
-              <span>Merchant Goal</span>
-              <strong>Prize Tier</strong>
-            </article>
-          </div>
-
-          <div class="welcome-actions">
-            <button id="replayBtn" class="primary-btn">Play Again</button>
-          </div>
-        </div>
-      </section>
-
-      <section id="interstitialModal" class="modal hidden">
-        <div class="modal-card">
-          <p class="eyebrow">SPECIAL OFFER</p>
-          <h3 id="modalTitle">Keep your streak?</h3>
-          <p id="modalText" class="challenge-copy"></p>
-          <div id="modalActions" class="modal-actions"></div>
-        </div>
-      </section>
-    </main>
+    <img id="shitcoin" src="shitcoin.png" alt="Shitcoin" onclick="trackClick()">
+    <div id="clickCounter">Clicks: 0</div>
+    <div id="sidebar">
+      <button class="sidebar-btn" data-score="100">Upgrade 1</button>
+      <button class="sidebar-btn" data-score="200">Upgrade 2</button>
+      <button class="sidebar-btn" data-score="300">Upgrade 3</button>
+      <button class="sidebar-btn" data-score="400">Upgrade 4</button>
+      <button class="sidebar-btn" data-score="500">Upgrade 5</button>
+      <button class="sidebar-btn" data-score="600">Upgrade 6</button>
+      <button class="sidebar-btn" data-score="700">Upgrade 7</button>
+      <button class="sidebar-btn" data-score="800">Upgrade 8</button>
+      <button class="sidebar-btn" data-score="900">Upgrade 9</button>
+      <button class="sidebar-btn" data-score="1000">Upgrade 10</button>
+    </div>
 
     <script src="script.js"></script>
   </body>
