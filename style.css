@@ -56,6 +56,34 @@ h3 {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
+  transition: transform 0.05s ease;
+  user-select: none;
+}
+
+#shitcoin.clicked {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.floating-number {
+  position: absolute;
+  pointer-events: none;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: var(--accent);
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
+  animation: float-up 0.8s ease-out forwards;
+  z-index: 100;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }
 
 #clickCounter {
@@ -70,7 +98,7 @@ h3 {
   position: fixed;
   right: 0;
   top: 0;
-  width: 200px;
+  width: 250px;
   height: 100vh;
   background: var(--panel);
   border-left: 1px solid var(--line);
@@ -88,6 +116,7 @@ h3 {
   border-radius: 5px;
   cursor: pointer;
   font-weight: 700;
+  font-size: 0.9rem;
 }
 
 .sidebar-btn:disabled {
