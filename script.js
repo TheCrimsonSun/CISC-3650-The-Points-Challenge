@@ -1,7 +1,14 @@
 let bitCoins = 0;
 let totalCPS = 0;
+let combo = 0;
 const upgradeButtons = document.querySelectorAll('.upgrade-btn');
 const bitCoinImg = document.getElementById('shitcoin');
+const comboCounter = document.getElementById('comboCounter');
+const comboTimerContainer = document.getElementById('comboTimerContainer');
+const comboTimerBar = document.getElementById('comboTimerBar');
+
+let lastClickTime = 0;
+const COMBO_DURATION = 2000; // 2 seconds
 
 // Screens
 const menuScreen = document.getElementById('menu-screen');
@@ -38,6 +45,19 @@ function updateUI() {
   document.getElementById('clickCounter').textContent = `Bitcoins: ${formatNumber(bitCoins)}`;
   document.getElementById('cpsCounter').textContent = `Bitcoins per second: ${formatNumber(totalCPS)}`;
   
+  if (combo > 0) {
+    comboCounter.classList.remove('hidden');
+    comboTimerContainer.classList.remove('hidden');
+    comboCounter.textContent = `Combo x${combo}`;
+    // Add pop effect
+    comboCounter.classList.remove('active');
+    void comboCounter.offsetWidth; // Trigger reflow
+    comboCounter.classList.add('active');
+  } else {
+    comboCounter.classList.add('hidden');
+    comboTimerContainer.classList.add('hidden');
+  }
+
   upgradeButtons.forEach(btn => {
     const cost = parseInt(btn.dataset.cost);
     btn.disabled = bitCoins < cost;
@@ -64,15 +84,39 @@ function createFloatingNumber(x, y, text) {
 }
 
 bitCoinImg.addEventListener('click', (event) => {
-  bitCoins++;
+  // Combo Logic
+  combo++;
+  lastClickTime = Date.now();
+  
+  const clickValue = 1 + Math.floor(combo / 10);
+  bitCoins += clickValue;
   
   // Visual click effect
   bitCoinImg.classList.add('clicked');
   setTimeout(() => bitCoinImg.classList.remove('clicked'), 50);
   
-  createFloatingNumber(event.clientX, event.clientY, '+1');
+  createFloatingNumber(event.clientX, event.clientY, `+${formatNumber(clickValue)}`);
   updateUI();
 });
+
+function updateComboTimer() {
+  if (combo > 0) {
+    const elapsed = Date.now() - lastClickTime;
+    const remaining = Math.max(0, COMBO_DURATION - elapsed);
+    const percentage = (remaining / COMBO_DURATION) * 100;
+    
+    comboTimerBar.style.width = `${percentage}%`;
+    
+    if (remaining <= 0) {
+      combo = 0;
+      updateUI();
+    }
+  }
+  requestAnimationFrame(updateComboTimer);
+}
+
+// Start the combo timer loop
+updateComboTimer();
 
 upgradeButtons.forEach(btn => {
   // Store base name
