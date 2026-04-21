@@ -1,64 +1,30 @@
 let shitcoinClicks = 0;
 let totalCPS = 0;
-const sidebarButtons = document.querySelectorAll('.sidebar-btn');
+const upgradeButtons = document.querySelectorAll('.upgrade-btn');
 
 function trackClick(event) {
   shitcoinClicks++;
-  updateUI();
-
-  // Visual feedback for the image
-  const img = document.getElementById('shitcoin');
-  img.classList.add('clicked');
-  setTimeout(() => img.classList.remove('clicked'), 50);
-
-  // Floating number logic
-  if (event) {
-    createFloatingNumber(event.clientX, event.clientY);
-  }
+  document.getElementById('clickCounter').textContent = `Clicks: ${shitcoinClicks}`;
 }
 
-function updateUI() {
-  document.getElementById('clickCounter').textContent = `Bitcoins: ${Math.floor(shitcoinClicks)}`;
-  document.getElementById('cpsCounter').textContent = `Bitcoins per second: ${totalCPS}`;
-  updateSidebarButtons();
-}
-
-function createFloatingNumber(x, y, text = '+1') {
-  const floating = document.createElement('div');
-  floating.className = 'floating-number';
-  floating.textContent = text;
-  
-  // Randomize position slightly
-  const offsetX = (Math.random() - 0.5) * 80;
-  const offsetY = (Math.random() - 0.5) * 80;
-  
-  floating.style.left = `${x + offsetX}px`;
-  floating.style.top = `${y + offsetY}px`;
-  
-  document.body.appendChild(floating);
-  
-  // Remove element after animation finishes
-  setTimeout(() => {
-    floating.remove();
-  }, 800);
-}
-
-function updateSidebarButtons() {
-  sidebarButtons.forEach(btn => {
-    const score = parseInt(btn.dataset.score);
-    btn.disabled = shitcoinClicks < score;
+function updateUpgradeButtons() {
+  upgradeButtons.forEach(btn => {
+    const cost = parseInt(btn.dataset.cost);
+    btn.disabled = shitcoinClicks < cost;
   });
 }
 
-sidebarButtons.forEach(btn => {
+upgradeButtons.forEach(btn => {
   btn.addEventListener('click', () => {
-    const score = parseInt(btn.dataset.score);
+    const cost = parseInt(btn.dataset.cost);
     const cps = parseInt(btn.dataset.cps);
-    if (shitcoinClicks >= score) {
-      shitcoinClicks -= score;
+    if (shitcoinClicks >= cost) {
+      shitcoinClicks -= cost;
       totalCPS += cps;
-      updateUI();
-      console.log(`Subtracted ${score} points! Total CPS: ${totalCPS}`);
+      document.getElementById('clickCounter').textContent = `Clicks: ${shitcoinClicks}`;
+      document.getElementById('cpsCounter').textContent = `CPS: ${totalCPS}`;
+      updateUpgradeButtons();
+      console.log(`Bought upgrade! +${cps} CPS`);
     }
   });
 });
@@ -83,4 +49,12 @@ setInterval(() => {
 }, 1000);
 
 // Initialize
-updateUI();
+updateUpgradeButtons();
+
+// CPS timer
+setInterval(() => {
+  if (totalCPS > 0) {
+    shitcoinClicks += totalCPS;
+    document.getElementById('clickCounter').textContent = `Clicks: ${shitcoinClicks}`;
+  }
+}, 1000);
