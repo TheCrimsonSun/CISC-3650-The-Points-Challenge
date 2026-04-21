@@ -81,7 +81,7 @@ upgradeButtons.forEach(btn => {
   btn.dataset.name = baseName;
 
   btn.addEventListener('click', () => {
-    const cost = parseInt(btn.dataset.cost);
+    const score = parseInt(btn.dataset.score);
     const cps = parseInt(btn.dataset.cps);
     
     if (bitCoins >= cost) {
