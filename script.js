@@ -3,27 +3,6 @@ let totalCPS = 0;
 const upgradeButtons = document.querySelectorAll('.upgrade-btn');
 const bitCoinImg = document.getElementById('shitcoin');
 
-// Screens
-const menuScreen = document.getElementById('menu-screen');
-const instructionsScreen = document.getElementById('instructions-screen');
-const gameScreen = document.getElementById('game-screen');
-
-// Buttons
-const startBtn = document.getElementById('start-btn');
-const howToBtn = document.getElementById('how-to-btn');
-const backToMenuBtn = document.getElementById('back-to-menu-btn');
-const pauseBtn = document.getElementById('pause-btn');
-
-function showScreen(screen) {
-  [menuScreen, instructionsScreen, gameScreen].forEach(s => s.classList.add('hidden'));
-  screen.classList.remove('hidden');
-}
-
-startBtn.addEventListener('click', () => showScreen(gameScreen));
-howToBtn.addEventListener('click', () => showScreen(instructionsScreen));
-backToMenuBtn.addEventListener('click', () => showScreen(menuScreen));
-pauseBtn.addEventListener('click', () => showScreen(menuScreen));
-
 function formatNumber(num) {
   if (num >= 1000000) {
     return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -81,7 +60,7 @@ upgradeButtons.forEach(btn => {
   btn.dataset.name = baseName;
 
   btn.addEventListener('click', () => {
-    const score = parseInt(btn.dataset.score);
+    const cost = parseInt(btn.dataset.cost);
     const cps = parseInt(btn.dataset.cps);
     
     if (bitCoins >= cost) {
@@ -110,7 +89,7 @@ setInterval(() => {
 
 // Periodic floating text for CPS
 setInterval(() => {
-  if (totalCPS > 0 && !gameScreen.classList.contains('hidden')) {
+  if (totalCPS > 0) {
     const rect = bitCoinImg.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
