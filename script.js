@@ -2,7 +2,7 @@ let shitcoinClicks = 0;
 let totalCPS = 0;
 const upgradeButtons = document.querySelectorAll('.upgrade-btn');
 
-function trackClick() {
+function trackClick(event) {
   shitcoinClicks++;
   document.getElementById('clickCounter').textContent = `Clicks: ${shitcoinClicks}`;
 }
@@ -28,6 +28,25 @@ upgradeButtons.forEach(btn => {
     }
   });
 });
+
+// Passive Income Interval (every 100ms)
+setInterval(() => {
+  if (totalCPS > 0) {
+    shitcoinClicks += totalCPS / 10;
+    updateUI();
+  }
+}, 100);
+
+// Visual feedback for passive income (every 1 second)
+setInterval(() => {
+  if (totalCPS > 0) {
+    const img = document.getElementById('shitcoin');
+    const rect = img.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    createFloatingNumber(x, y, `+${totalCPS}`);
+  }
+}, 1000);
 
 // Initialize
 updateUpgradeButtons();
