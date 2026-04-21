@@ -1,9 +1,24 @@
 let shitcoinClicks = 0;
 let totalCPS = 0;
+let comboCount = 0;
+let lastClickTime = 0;
+const COMBO_TIMEOUT = 1000; // 1 second
 const sidebarButtons = document.querySelectorAll('.sidebar-btn');
 
 function trackClick(event) {
-  shitcoinClicks++;
+  const now = Date.now();
+  if (now - lastClickTime < COMBO_TIMEOUT) {
+    comboCount++;
+  } else {
+    comboCount = 1;
+  }
+  lastClickTime = now;
+
+  // Bonus: +1 bitcoin for every 5 combo
+  const bonus = Math.floor(comboCount / 5);
+  const clickValue = 1 + bonus;
+  
+  shitcoinClicks += clickValue;
   updateUI();
 
   // Visual feedback for the image
@@ -13,7 +28,7 @@ function trackClick(event) {
 
   // Floating number logic
   if (event) {
-    createFloatingNumber(event.clientX, event.clientY);
+    createFloatingNumber(event.clientX, event.clientY, `+${clickValue}`);
   }
 }
 
@@ -30,6 +45,19 @@ function formatNumber(num) {
 function updateUI() {
   document.getElementById('clickCounter').textContent = `Bitcoins: ${formatNumber(shitcoinClicks)}`;
   document.getElementById('cpsCounter').textContent = `Bitcoins per second: ${formatNumber(totalCPS)}`;
+  
+  const comboEl = document.getElementById('comboCounter');
+  if (comboCount > 1) {
+    comboEl.style.display = 'block';
+    comboEl.textContent = `${comboCount}x Combo!`;
+    // Add a little pop effect
+    comboEl.classList.remove('combo-pop');
+    void comboEl.offsetWidth; // Trigger reflow
+    comboEl.classList.add('combo-pop');
+  } else {
+    comboEl.style.display = 'none';
+  }
+
   updateSidebarButtons();
 }
 
@@ -95,6 +123,15 @@ sidebarButtons.forEach(btn => {
     }
   });
 });
+
+// Periodic combo reset check
+setInterval(() => {
+  const now = Date.now();
+  if (comboCount > 1 && now - lastClickTime >= COMBO_TIMEOUT) {
+    comboCount = 0;
+    updateUI();
+  }
+}, 100);
 
 // Passive Income Interval (every 100ms)
 setInterval(() => {
