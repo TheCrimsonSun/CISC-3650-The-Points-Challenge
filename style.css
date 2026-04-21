@@ -181,6 +181,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-y: auto;
 }
 
 .upgrade-btn {
@@ -197,7 +198,15 @@ body {
   text-align: left;
 }
 
-.sidebar-btn:disabled {
+.upgrade-btn:hover:not(:disabled) {
+  background: #6aa378;
+}
+
+.upgrade-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.upgrade-btn:disabled {
   background: var(--muted);
   color: #666;
   cursor: not-allowed;
