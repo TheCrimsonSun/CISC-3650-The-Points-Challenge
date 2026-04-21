@@ -17,16 +17,36 @@ function trackClick(event) {
   }
 }
 
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  }
+  return Math.floor(num).toString();
+}
+
 function updateUI() {
-  document.getElementById('clickCounter').textContent = `Bitcoins: ${Math.floor(shitcoinClicks)}`;
-  document.getElementById('cpsCounter').textContent = `Bitcoins per second: ${totalCPS}`;
+  document.getElementById('clickCounter').textContent = `Bitcoins: ${formatNumber(shitcoinClicks)}`;
+  document.getElementById('cpsCounter').textContent = `Bitcoins per second: ${formatNumber(totalCPS)}`;
   updateSidebarButtons();
 }
 
 function createFloatingNumber(x, y, text = '+1') {
   const floating = document.createElement('div');
   floating.className = 'floating-number';
-  floating.textContent = text;
+  
+  // Format the number if it's a numeric string like "+10" or "500"
+  let displayValue = text;
+  if (text.startsWith('+')) {
+    const num = parseFloat(text.slice(1));
+    if (!isNaN(num)) displayValue = '+' + formatNumber(num);
+  } else if (!isNaN(parseFloat(text))) {
+    displayValue = formatNumber(parseFloat(text));
+  }
+  
+  floating.textContent = displayValue;
   
   // Randomize position slightly
   const offsetX = (Math.random() - 0.5) * 80;
@@ -51,14 +71,27 @@ function updateSidebarButtons() {
 }
 
 sidebarButtons.forEach(btn => {
+  // Store the base name of the upgrade
+  const originalText = btn.textContent;
+  const baseName = originalText.split(' (')[0];
+  btn.dataset.name = baseName;
+
   btn.addEventListener('click', () => {
     const score = parseInt(btn.dataset.score);
     const cps = parseInt(btn.dataset.cps);
     if (shitcoinClicks >= score) {
       shitcoinClicks -= score;
       totalCPS += cps;
+      
+      // Increase cost by 1.15x
+      const nextScore = Math.ceil(score * 1.15);
+      btn.dataset.score = nextScore;
+      
+      // Update button text
+      btn.textContent = `${btn.dataset.name} (${formatNumber(nextScore)} BTC)`;
+      
       updateUI();
-      console.log(`Subtracted ${score} points! Total CPS: ${totalCPS}`);
+      console.log(`Purchased ${btn.dataset.name}! New cost: ${nextScore}. Total CPS: ${totalCPS}`);
     }
   });
 });
