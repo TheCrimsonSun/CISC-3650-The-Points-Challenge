@@ -13,23 +13,22 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <img id="shitcoin" src="shitcoin.png" alt="Shitcoin" onclick="trackClick()">
-    <div id="clickCounter">Clicks: 0</div>
-    <div id="cpsCounter">CPS: 0</div>
+    <img id="shitcoin" src="shitcoin.png" alt="Shitcoin" onclick="trackClick(event)">
+    <div id="clickCounter">Bitcoins: 0</div>
+    <div id="cpsCounter">Bitcoins per second: 0</div>
     <div id="sidebar">
-      <button class="upgrade-btn" data-cost="100" data-cps="1">Upgrade 1 (100c, +1 CPS)</button>
-      <button class="upgrade-btn" data-cost="200" data-cps="2">Upgrade 2 (200c, +2 CPS)</button>
-      <button class="upgrade-btn" data-cost="300" data-cps="3">Upgrade 3 (300c, +3 CPS)</button>
-      <button class="upgrade-btn" data-cost="400" data-cps="4">Upgrade 4 (400c, +4 CPS)</button>
-      <button class="upgrade-btn" data-cost="500" data-cps="5">Upgrade 5 (500c, +5 CPS)</button>
-      <button class="upgrade-btn" data-cost="600" data-cps="6">Upgrade 6 (600c, +6 CPS)</button>
-      <button class="upgrade-btn" data-cost="700" data-cps="7">Upgrade 7 (700c, +7 CPS)</button>
-      <button class="upgrade-btn" data-cost="800" data-cps="8">Upgrade 8 (800c, +8 CPS)</button>
-      <button class="upgrade-btn" data-cost="900" data-cps="9">Upgrade 9 (900c, +9 CPS)</button>
-      <button class="upgrade-btn" data-cost="1000" data-cps="10">Upgrade 10 (1000c, +10 CPS)</button>
+      <button class="sidebar-btn" data-score="100" data-cps="1">CPU Miner (100 BTC)</button>
+      <button class="sidebar-btn" data-score="200" data-cps="5">GPU Rig (200 BTC)</button>
+      <button class="sidebar-btn" data-score="300" data-cps="10">ASIC Miner (300 BTC)</button>
+      <button class="sidebar-btn" data-score="400" data-cps="20">Mining Farm (400 BTC)</button>
+      <button class="sidebar-btn" data-score="500" data-cps="50">Mining Pool (500 BTC)</button>
+      <button class="sidebar-btn" data-score="600" data-cps="100">Satellite Node (600 BTC)</button>
+      <button class="sidebar-btn" data-score="700" data-cps="200">Quantum Miner (700 BTC)</button>
+      <button class="sidebar-btn" data-score="800" data-cps="500">Blockchain Core (800 BTC)</button>
+      <button class="sidebar-btn" data-score="900" data-cps="1000">Satoshi's Legacy (900 BTC)</button>
+      <button class="sidebar-btn" data-score="1000" data-cps="2000">Bitcoin Citadel (1000 BTC)</button>
     </div>
 
     <script src="script.js"></script>
   </body>
 </html>
-
