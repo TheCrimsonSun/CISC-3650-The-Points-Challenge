@@ -29,6 +29,30 @@ body {
   overflow: hidden;
 }
 
+.main-btn:active {
+  transform: translateY(1px);
+}
+
+/* Instructions Screen */
+.screen-title {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: var(--accent);
+}
+
+.instructions-content {
+  max-width: 600px;
+  background: var(--panel);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* Game Elements */
 #shitcoin {
   position: absolute;
   left: 35%;
