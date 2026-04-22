@@ -225,3 +225,48 @@ body {
   cursor: pointer;
   z-index: 100;
 }
+
+#leaderboard-btn {
+  left: 130px;
+}
+
+.leaderboard-content {
+  width: 90%;
+  max-width: 600px;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th {
+  background: var(--accent-2);
+  color: var(--bg);
+  padding: 0.8rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+}
+
+.leaderboard-table td {
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.leaderboard-table tr.player-row {
+  background: rgba(255, 207, 64, 0.1);
+  font-weight: 700;
+  border: 2px solid var(--accent);
+}

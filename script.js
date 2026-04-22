@@ -8,6 +8,7 @@ const menuScreen = document.getElementById('menu-screen');
 const instructionsScreen = document.getElementById('instructions-screen');
 const gameScreen = document.getElementById('game-screen');
 const finishScreen = document.getElementById('finish-screen');
+const leaderboardScreen = document.getElementById('leaderboard-screen');
 
 // Buttons
 const startBtn = document.getElementById('start-btn');
@@ -15,9 +16,11 @@ const howToBtn = document.getElementById('how-to-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const pauseBtn = document.getElementById('pause-btn');
 const playAgainBtn = document.getElementById('play-again-btn');
+const leaderboardBtn = document.getElementById('leaderboard-btn');
+const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
 
 function showScreen(screen) {
-  [menuScreen, instructionsScreen, gameScreen, finishScreen].forEach(s => s.classList.add('hidden'));
+  [menuScreen, instructionsScreen, gameScreen, finishScreen, leaderboardScreen].forEach(s => s.classList.add('hidden'));
   screen.classList.remove('hidden');
 }
 
@@ -60,6 +63,40 @@ playAgainBtn.addEventListener('click', () => {
   updateUI();
   showScreen(gameScreen);
 });
+
+function generateLeaderboard() {
+  const fakeLeaders = [
+    { name: 'CryptoBro420', bitcoins: 45230000000 },
+    { name: 'HodlMaster', bitcoins: 38500000000 },
+    { name: 'SatoshiSimp', bitcoins: 32100000000 },
+    { name: 'BlockchainKing', bitcoins: 28750000000 },
+    { name: 'CoinCollector', bitcoins: 25300000000 },
+    { name: 'MinerMike', bitcoins: 22100000000 },
+    { name: 'DiamondHands', bitcoins: 19800000000 },
+    { name: 'Web3Warrior', bitcoins: 18200000000 },
+    { name: 'StackSats', bitcoins: 16500000000 }
+  ];
+  
+  return fakeLeaders;
+}
+
+function displayLeaderboard() {
+  const leaderboard = generateLeaderboard();
+  const leaderboardContent = document.getElementById('leaderboard-content');
+  let html = '<table class="leaderboard-table"><tr><th>Rank</th><th>Name</th><th>Bitcoins</th></tr>';
+  
+  leaderboard.forEach((leader, index) => {
+    html += `<tr><td>${index + 1}</td><td>${leader.name}</td><td>${formatNumber(leader.bitcoins)} BTC</td></tr>`;
+  });
+  
+  html += `<tr class="player-row"><td>10</td><td>You</td><td>${formatNumber(bitCoins)} BTC</td></tr></table>`;
+  
+  leaderboardContent.innerHTML = html;
+  showScreen(leaderboardScreen);
+}
+
+leaderboardBtn.addEventListener('click', () => displayLeaderboard());
+closeLeaderboardBtn.addEventListener('click', () => showScreen(gameScreen));
 
 function formatNumber(num) {
   if (num >= 1000000) {
