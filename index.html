@@ -34,6 +34,21 @@
       <button id="back-to-menu-btn" class="main-btn">Back to Menu</button>
     </div>
 
+    <!-- Finish Screen -->
+    <div id="finish-screen" class="screen hidden">
+      <h2 class="screen-title">Congratulations!</h2>
+      <div class="finish-content">
+        <p>You've become a Bitcoin billionaire!</p>
+      </div>
+      <button id="play-again-btn" class="main-btn">Play Again</button>
+    </div>
+
+        <p>3. Upgrades increase your Bitcoins per second (BTC/s).</p>
+        <p>4. Become the ultimate Bitcoin billionaire!</p>
+      </div>
+      <button id="back-to-menu-btn" class="main-btn">Back to Menu</button>
+    </div>
+
     <!-- Game Screen -->
     <div id="game-screen" class="screen hidden">
       <img
@@ -73,6 +88,12 @@
         </button>
         <button class="upgrade-btn" data-cost="25000000" data-cps="120000">
           Bitcoin Citadel (25M BTC)
+        </button>
+        <button class="upgrade-btn" data-cost="1000000000" data-cps="500000" finish="1">
+          Decentralized Empire (1B BTC)
+        </button>
+        <button class="upgrade-btn" data-cost="0" data-cps="1000000000">
+          Debug Ending (1B BTC)
         </button>
       </div>
       <button id="pause-btn" class="mini-btn">Menu</button>

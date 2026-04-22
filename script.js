@@ -7,15 +7,17 @@ const bitCoinImg = document.getElementById('shitcoin');
 const menuScreen = document.getElementById('menu-screen');
 const instructionsScreen = document.getElementById('instructions-screen');
 const gameScreen = document.getElementById('game-screen');
+const finishScreen = document.getElementById('finish-screen');
 
 // Buttons
 const startBtn = document.getElementById('start-btn');
 const howToBtn = document.getElementById('how-to-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const pauseBtn = document.getElementById('pause-btn');
+const playAgainBtn = document.getElementById('play-again-btn');
 
 function showScreen(screen) {
-  [menuScreen, instructionsScreen, gameScreen].forEach(s => s.classList.add('hidden'));
+  [menuScreen, instructionsScreen, gameScreen, finishScreen].forEach(s => s.classList.add('hidden'));
   screen.classList.remove('hidden');
 }
 
@@ -23,6 +25,41 @@ startBtn.addEventListener('click', () => showScreen(gameScreen));
 howToBtn.addEventListener('click', () => showScreen(instructionsScreen));
 backToMenuBtn.addEventListener('click', () => showScreen(menuScreen));
 pauseBtn.addEventListener('click', () => showScreen(menuScreen));
+playAgainBtn.addEventListener('click', () => {
+  // Reset game state
+  bitCoins = 0;
+  totalCPS = 0;
+  
+  // Reset all upgrade buttons to original state
+  upgradeButtons.forEach(btn => {
+    const originalCost = parseInt(btn.dataset.cost);
+    // Find original cost by dividing by 1.15 repeatedly (reverse the increases)
+    let baseCost = originalCost;
+    // Reset to initial costs based on the button's name
+    const costs = {
+      'CPU Miner': 15,
+      'GPU Rig': 100,
+      'ASIC Miner': 500,
+      'Mining Farm': 2000,
+      'Mining Pool': 10000,
+      'Satellite Node': 50000,
+      'Quantum Miner': 250000,
+      'Blockchain Core': 1000000,
+      "Satoshi's Legacy": 5000000,
+      'Bitcoin Citadel': 25000000,
+      'Decentralized Empire': 1000000000,
+      'Debug Ending': 0
+    };
+    
+    const baseName = btn.dataset.name;
+    baseCost = costs[baseName];
+    btn.dataset.cost = baseCost;
+    btn.textContent = `${baseName} (${formatNumber(baseCost)} BTC)`;
+  });
+  
+  updateUI();
+  showScreen(gameScreen);
+});
 
 function formatNumber(num) {
   if (num >= 1000000) {
@@ -96,6 +133,11 @@ upgradeButtons.forEach(btn => {
       btn.textContent = `${btn.dataset.name} (${formatNumber(newCost)} BTC)`;
       
       updateUI();
+      
+      // Check if this upgrade finishes the game
+      if (btn.hasAttribute('finish')) {
+        showScreen(finishScreen);
+      }
     }
   });
 });
