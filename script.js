@@ -18,6 +18,10 @@ const pauseBtn = document.getElementById('pause-btn');
 const playAgainBtn = document.getElementById('play-again-btn');
 const leaderboardBtn = document.getElementById('leaderboard-btn');
 const closeLeaderboardBtn = document.getElementById('close-leaderboard-btn');
+const adsBtn = document.getElementById('ads-btn');
+const adsModal = document.getElementById('ads-modal');
+const closeAdsModalBtn = document.getElementById('close-ads-modal');
+const purchaseAdRemovalBtn = document.getElementById('purchase-ad-removal-btn');
 
 function showScreen(screen) {
   [menuScreen, instructionsScreen, gameScreen, finishScreen, leaderboardScreen].forEach(s => s.classList.add('hidden'));
@@ -97,6 +101,25 @@ function displayLeaderboard() {
 
 leaderboardBtn.addEventListener('click', () => displayLeaderboard());
 closeLeaderboardBtn.addEventListener('click', () => showScreen(gameScreen));
+
+adsBtn.addEventListener('click', () => {
+  adsModal.classList.remove('hidden');
+});
+
+closeAdsModalBtn.addEventListener('click', () => {
+  adsModal.classList.add('hidden');
+});
+
+purchaseAdRemovalBtn.addEventListener('click', () => {
+  alert('Thanks for your purchase! Ads have been removed.');
+  adsModal.classList.add('hidden');
+});
+
+adsModal.addEventListener('click', (e) => {
+  if (e.target === adsModal) {
+    adsModal.classList.add('hidden');
+  }
+});
 
 function formatNumber(num) {
   if (num >= 1000000) {
