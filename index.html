@@ -75,11 +75,26 @@
         <button class="upgrade-btn" data-cost="5000000" data-cps="25000">
           Satoshi's Legacy (5M BTC)
         </button>
-        <button class="upgrade-btn" data-cost="25000000" data-cps="120000">
+        <button class="upgrade-btn" data-is-last="true" data-cost="25000000" data-cps="120000">
           Bitcoin Citadel (25M BTC)
         </button>
       </div>
       <button id="pause-btn" class="mini-btn">Menu</button>
+    </div>
+
+    <!-- Ending Screen -->
+    <div id="ending-screen" class="screen hidden">
+      <h1 class="game-title">Financial Freedom!</h1>
+      <div class="instructions-content">
+        <p>Congratulations!</p>
+        <p>You have successfully established the <strong>Bitcoin Citadel</strong>.</p>
+        <p>The global financial system has been decentralized, and you are now the sovereign of your own wealth.</p>
+        <p id="finalStats"></p>
+      </div>
+      <div class="menu-buttons">
+        <button id="continue-btn" class="main-btn">Keep Playing</button>
+        <button id="restart-btn" class="main-btn">New Game</button>
+      </div>
     </div>
 
     <script src="script.js"></script>

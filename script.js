@@ -14,15 +14,20 @@ const COMBO_DURATION = 2000; // 2 seconds
 const menuScreen = document.getElementById('menu-screen');
 const instructionsScreen = document.getElementById('instructions-screen');
 const gameScreen = document.getElementById('game-screen');
+const endingScreen = document.getElementById('ending-screen');
 
 // Buttons
 const startBtn = document.getElementById('start-btn');
 const howToBtn = document.getElementById('how-to-btn');
 const backToMenuBtn = document.getElementById('back-to-menu-btn');
 const pauseBtn = document.getElementById('pause-btn');
+const continueBtn = document.getElementById('continue-btn');
+const restartBtn = document.getElementById('restart-btn');
 
 function showScreen(screen) {
-  [menuScreen, instructionsScreen, gameScreen].forEach(s => s.classList.add('hidden'));
+  [menuScreen, instructionsScreen, gameScreen, endingScreen].forEach(s => {
+    if (s) s.classList.add('hidden');
+  });
   screen.classList.remove('hidden');
 }
 
@@ -30,8 +35,13 @@ startBtn.addEventListener('click', () => showScreen(gameScreen));
 howToBtn.addEventListener('click', () => showScreen(instructionsScreen));
 backToMenuBtn.addEventListener('click', () => showScreen(menuScreen));
 pauseBtn.addEventListener('click', () => showScreen(menuScreen));
+continueBtn.addEventListener('click', () => showScreen(gameScreen));
+restartBtn.addEventListener('click', () => location.reload());
 
 function formatNumber(num) {
+  if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+  }
   if (num >= 1000000) {
     return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
   }
@@ -118,6 +128,8 @@ function updateComboTimer() {
 // Start the combo timer loop
 updateComboTimer();
 
+let lastUpgradePurchased = false;
+
 upgradeButtons.forEach(btn => {
   // Store base name
   const originalText = btn.textContent.trim();
@@ -138,6 +150,13 @@ upgradeButtons.forEach(btn => {
       
       // Update text
       btn.textContent = `${btn.dataset.name} (${formatNumber(newCost)} BTC)`;
+      
+      // Check for ending
+      if (btn.dataset.isLast === 'true' && !lastUpgradePurchased) {
+        lastUpgradePurchased = true;
+        document.getElementById('finalStats').textContent = `Final CPS: ${formatNumber(totalCPS)}`;
+        showScreen(endingScreen);
+      }
       
       updateUI();
     }
